@@ -16,7 +16,7 @@ export class AppService {
         for (let ticket of tickets) {
           if(organization._id===ticket.organization_id){
             let obj = {
-              "ticket_id": ticket._id,
+              "_id": ticket._id,
               "ticket_subject": ticket.subject
             }
             ticketsData.push(obj);
@@ -25,7 +25,7 @@ export class AppService {
         for (let user of users) {
           if(organization._id===user.organization_id){
             let obj = {
-              "user_id": user._id,
+              "_id": user._id,
               "user_name": user.name
             }
             usersData.push(obj);
@@ -34,8 +34,8 @@ export class AppService {
         let organizationData = {
           "_id": organization._id,
           "name": organization.name,
-          "ticketsData":ticketsData,
-          "usersData":usersData
+          "tickets":ticketsData,
+          "users":usersData
         }        
         organizationsData.push(organizationData);
       }
@@ -47,7 +47,46 @@ export class AppService {
 
   async getTickets(@Req() request: Request) {
     try {
-      return tickets;
+      let ticketsData = [];
+      for (let ticket of tickets) {
+        let assigneeName = [];
+        let submitterName = [];
+        let organizationName= []
+        for (let user of users) {
+          if(user._id===ticket.assignee_id){
+            let obj = {
+              "_id": user._id,
+              "user_name": user.name
+            }
+            assigneeName.push(obj);
+          }
+          if(user._id===ticket.submitter_id){
+            let obj = {
+              "_id": user._id,
+              "user_name": user.name
+            }
+            submitterName.push(obj);
+          }
+        }
+        for (let organization of organizations) {
+          if(ticket.organization_id===organization._id){
+            let obj = {
+              "_id": organization._id,
+              "organization_name": organization.name
+            }
+            organizationName.push(obj);
+          }
+        }
+        let ticketData = {
+          "_id": ticket._id,
+          "name": ticket.subject,
+          "assignee":assigneeName,
+          "submitter":submitterName,
+          "organization":organizationName
+        }        
+        ticketsData.push(ticketData);
+      }
+      return ticketsData;
     } catch (error) {
       throw new HttpException(error, error.status);
     }
@@ -55,7 +94,46 @@ export class AppService {
 
   async getUsers(@Req() request: Request) {
     try {
-      return users;
+      let usersData = [];
+      for (let user of users) {
+        let assigneeTickets = [];
+        let submittedTickets = [];
+        let userOrganization= []
+        for (let ticket of tickets) {
+          if(user._id===ticket.assignee_id){
+            let obj = {
+              "_id": ticket._id,
+              "ticket_subject": ticket.subject
+            }
+            assigneeTickets.push(obj);
+          }
+          if(user._id===ticket.submitter_id){
+            let obj = {
+              "_id": ticket._id,
+              "ticket_subject": ticket.subject
+            }
+            submittedTickets.push(obj);
+          }
+        }
+        for (let organization of organizations) {
+          if(user.organization_id===organization._id){
+            let obj = {
+              "_id": organization._id,
+              "organization_name": organization.name
+            }
+            userOrganization.push(obj);
+          }
+        }
+        let userData = {
+          "_id": user._id,
+          "name": user.name,
+          "assignee_tickets":assigneeTickets,
+          "submitted_tickets":submittedTickets,
+          "user_organization":userOrganization
+        }        
+        usersData.push(userData);
+      }
+      return usersData;
     } catch (error) {
       throw new HttpException(error, error.status);
     }
