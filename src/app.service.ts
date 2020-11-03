@@ -15,19 +15,13 @@ export class AppService {
         let usersData = [];
         for (let ticket of tickets) {
           if(organization._id===ticket.organization_id){
-            let obj = {
-              "_id": ticket._id,
-              "ticket_subject": ticket.subject
-            }
+            let obj = ticket.subject;
             ticketsData.push(obj);
           }
         }
         for (let user of users) {
           if(organization._id===user.organization_id){
-            let obj = {
-              "_id": user._id,
-              "user_name": user.name
-            }
+            let obj = user.name;
             usersData.push(obj);
           }
         }
@@ -54,26 +48,17 @@ export class AppService {
         let organizationName= []
         for (let user of users) {
           if(user._id===ticket.assignee_id){
-            let obj = {
-              "_id": user._id,
-              "user_name": user.name
-            }
+            let obj = user.name;
             assigneeName.push(obj);
           }
           if(user._id===ticket.submitter_id){
-            let obj = {
-              "_id": user._id,
-              "user_name": user.name
-            }
+            let obj = user.name;
             submitterName.push(obj);
           }
         }
         for (let organization of organizations) {
           if(ticket.organization_id===organization._id){
-            let obj = {
-              "_id": organization._id,
-              "organization_name": organization.name
-            }
+            let obj = organization.name;
             organizationName.push(obj);
           }
         }
