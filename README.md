@@ -40,7 +40,7 @@ $ npm install
 # development
 $ npm run start
 
-Runs the app in the development mode.\
+Runs the app in the development mode
 Open [http://localhost:3001](http://localhost:3001)
 
 # api end points - get();
