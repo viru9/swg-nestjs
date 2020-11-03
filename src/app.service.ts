@@ -101,26 +101,17 @@ export class AppService {
         let userOrganization= []
         for (let ticket of tickets) {
           if(user._id===ticket.assignee_id){
-            let obj = {
-              "_id": ticket._id,
-              "ticket_subject": ticket.subject
-            }
+            let obj = ticket.subject;
             assigneeTickets.push(obj);
           }
           if(user._id===ticket.submitter_id){
-            let obj = {
-              "_id": ticket._id,
-              "ticket_subject": ticket.subject
-            }
+            let obj = ticket.subject;
             submittedTickets.push(obj);
           }
         }
         for (let organization of organizations) {
           if(user.organization_id===organization._id){
-            let obj = {
-              "_id": organization._id,
-              "organization_name": organization.name
-            }
+            let obj = organization.name;
             userOrganization.push(obj);
           }
         }
