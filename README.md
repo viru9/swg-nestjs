@@ -40,11 +40,21 @@ $ npm install
 # development
 $ npm run start
 
+Runs the app in the development mode.\
+Open [http://localhost:3001](http://localhost:3001)
+
+# api end points - get();
+
+http://localhost:3001/organizations
+http://localhost:3001/tickets
+http://localhost:3001/users
+
 # watch mode
 $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
 ```
 
 ## License
